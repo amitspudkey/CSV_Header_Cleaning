@@ -4,8 +4,8 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 def main():
 	print("Program: CSV Header Cleaning")
-	print("Release: 1.0")
-	print("Date: 2019-01-17")
+	print("Release: 1.1")
+	print("Date: 2019-01-21")
 	print("Author: Brian Neely")
 	print()
 	print()
@@ -17,9 +17,12 @@ def main():
 	print("Specify the save location and filename.")
 	print()
 	print()
-	
+
 	#Hide Tkinter GUI
 	Tk().withdraw()
+
+	#Ask for delimination
+	delimination = input("Enter Deliminator: ")
 	
 	#Ask for number of columns
 	number_of_columns = number_of_columns_input()
@@ -38,39 +41,54 @@ def main():
 
 	#Create an empty output file
 	open(file_out, 'a').close()
-	
-	#Open input and output files. Define as utf8
-	with open(r'' + file_in, 'r', encoding="utf8") as f_input, open(r'' + file_out, 'w', encoding="utf8", newline='') as f_output:
-		print()
-		
-		#Set input reader
-		csv_input = csv.reader(f_input, delimiter=',', quotechar='"')
-		
-		#Set output writer
-		csv_output = csv.writer(f_output, delimiter=',', quotechar='"')
 
-		#Set header scan required to 1
-		header_scan = 1
-		
-		#Each each row
-		for row in csv_input:
-			
-			#Try to read the row at specified column
-			try: 
-				if header_scan == 1:
-					row[number_of_columns - 1]
-					header_scan = 0
-				
-				#Write row if it can read
-				csv_output.writerow(row)
-				
-			#If it can't read at specified column, skip row by doing nothing to it.
-			except:
-				print("Deleting line")
+	encode_index = 0
+	encoders = ["utf8", "utf16", "latin_1", "ascii"]
+	while delete_header(file_in, file_out, number_of_columns, delimination, encoders[encode_index]) == "Encode Error":
+		if encode_index < len(encoders) - 1:
+			encode_index = encode_index + 1
+		else:
+			print("Can't find appropriate encoder")
+			exit()
 
 	print("Program Completed!")
 	print("New file saved at: " + file_out)
 	input("Press Enter to close")
+
+def delete_header(file_in, file_out, number_of_columns, delimination, encoding):
+	try:
+		with open(r'' + file_in, 'r', encoding=encoding) as f_input, open(r'' + file_out, 'w', encoding=encoding,
+																		  newline='') as f_output:
+			print("Encoder Used: " + encoding)
+
+			# Set input reader
+			csv_input = csv.reader(f_input, delimiter=str(delimination), quotechar='"')
+
+			# Set output writer
+			csv_output = csv.writer(f_output, delimiter=',', quotechar='"')
+
+			# Set header scan required to 1
+			header_scan = 1
+
+			# Each each row
+			for row in csv_input:
+
+				# Try to read the row at specified column
+				try:
+					if header_scan == 1:
+						row[number_of_columns - 1]
+						header_scan = 0
+
+					# Write row if it can read
+					csv_output.writerow(row)
+
+				# If it can't read at specified column, skip row by doing nothing to it.
+				except:
+					pass
+	except UnicodeDecodeError:
+		return "Encode Error"
+
+	return csv_output
 
 def number_of_columns_input() -> int:
 	while True:
@@ -84,7 +102,6 @@ def number_of_columns_input() -> int:
 		except ValueError:
 			print("Input only accepts positive integer numbers.")
 	return columns
-
 
 if __name__ == '__main__':
 	main()
