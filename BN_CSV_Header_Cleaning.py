@@ -4,7 +4,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 def main():
 	print("Program: CSV Header Cleaning")
-	print("Release: 1.1")
+	print("Release: 1.1.1")
 	print("Date: 2019-01-21")
 	print("Author: Brian Neely")
 	print()
@@ -51,6 +51,7 @@ def main():
 			print("Can't find appropriate encoder")
 			exit()
 
+	print()
 	print("Program Completed!")
 	print("New file saved at: " + file_out)
 	input("Press Enter to close")
@@ -86,6 +87,8 @@ def delete_header(file_in, file_out, number_of_columns, delimination, encoding):
 				except:
 					pass
 	except UnicodeDecodeError:
+		print("Encoder error for " + encoding)
+		print()
 		return "Encode Error"
 
 	return csv_output
