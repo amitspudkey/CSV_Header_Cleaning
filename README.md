@@ -4,6 +4,7 @@ A small standalone program that removes report headers from CSV's.
 The program operates by scanning a csv file on a given column until it see data. Then it deletes the rows above that location.
 
 
+________________________________________________________________________________________________________________________________________
 Example:
 
 This is an example of a report
@@ -15,7 +16,7 @@ Column 1, Column 2, Column 3, Column 4, Column 5
 Data 1, Data 2, Data 3, Data 4, Data 5
 
 Data 1, Data 2, Data 3, Data 4, Data 5
-
+________________________________________________________________________________________________________________________________________
 
 
 
