@@ -1,7 +1,7 @@
 # BN_CSV_Header_Cleaning
 A small standalone program that removes report headers from CSV's.
 
-The program operates by scanning a csv file on a given column until it see data. Then it deletes the rows above that location.
+The program operates by scanning a csv file on a given column until it sees data, then deletes the rows above that location.
 
 
 ________________________________________________________________________________________________________________________________________
