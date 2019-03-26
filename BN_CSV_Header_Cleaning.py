@@ -4,9 +4,9 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 def main():
 	print("Program: CSV Header Cleaning")
-	print("Release: 1.1.1")
-	print("Date: 2019-01-21")
-	print("Author: Brian Neely")
+	print("Release: 1.1.2")
+	print("Date: 2019-03-26")
+	print("Author: Brian  Neely")
 	print()
 	print()
 	print("This program reads a csv file and will delete the first rows that do not have specified column.")
